@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Jewel Blast</title>
+  <meta charset="utf-8">
+  <link rel="stylesheet" type="text/css" href="{{url_for('static', filename = 'style.css')}}">
+</head>
+<body onload="setBgImage()">
+    <canvas id="canvas" width="600px" height="700px"></canvas>
+    <img id="bgImage" src="{{url_for('static', filename = 'image/gameBg.png')}}" style= "display: none;">
+    <audio src="{{ url_for('static', filename = 'sound/btnSound.wav')}}" id="btnSound"></audio>
+    <img id="btnStart" class="btn" src="{{ url_for('static',filename = 'image/buttons/startBtn.png')}}" onclick="location.href = '{{ url_for('index')}}',btnSound.play()">
+
+<script type="text/javascript">
+
+var canvas = document.getElementById("canvas");
+var ctx = canvas.getContext("2d");
+var btnSound = document.getElementById('btnSound');
+
+function setBgImage()
+{
+  ctx.drawImage(bgImage, 0, 0);
+}
+</script>
+
+</body>
+</html>

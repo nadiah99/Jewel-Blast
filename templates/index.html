@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Jewel Blast</title>
+  <meta charset="utf-8">
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename = 'style.css')}}">
+</head>
+
+<body onload="setBgImage()">
+    <canvas id="canvas" width="600px" height="700px"></canvas>
+
+    <img id="bgImage" src="{{ url_for('static', filename = 'image/gameBg.png')}}" style= "display: none;">
+    <img id="bgGame" src="{{ url_for('static',filename = 'image/background2.png')}}" style= "display: none;">
+    <img id="bgGame2" src="{{url_for('static', filename = 'image/background.png')}}" style= "display: none;">
+    <img id="yellow" src="{{url_for('static', filename = 'image/diamond/d1.png')}}" style= "display: none;">
+    <img id="red" src="{{ url_for('static', filename = 'image/diamond/d2.png')}}" style= "display: none;">
+    <img id="green" src="{{ url_for('static', filename = 'image/diamond/d3.png')}}" style= "display: none;">
+    <img id="blue" src="{{url_for('static', filename = 'image/diamond/d4.png')}}" style= "display: none;">
+    <img id="purple" src="{{ url_for('static', filename = 'image/diamond/d5.png')}}" style= "display: none;">
+    <img id="pink" src="{{url_for('static', filename = 'image/diamond/d7.png')}}" style= "display: none;">
+
+    <!--<button type="button" id="startBtn" onclick="initialize()">START</button> -->
+
+    <!--<legend>Username:</legend>-->
+    <input type="text" id="inputName" placeholder="Enter username" >
+    <button type="button" id="btnSave">Save</button>
+    <button type="button" id="btnBack" onclick="location.href = '{{ url_for('index')}}',btnSound.play()">Back</button>
+
+
+    <img id="basicBtn" class="btn" src="{{ url_for('static', filename = 'image/buttons/basicBtn.png')}}" onclick="setJS('{{ url_for('static',filename = 'basicGame.js')}}'),btnSound.play()">
+    <img id="timeBtn" class="btn" src="{{ url_for('static',filename = 'image/buttons/timeBtn.png')}}" onclick="setJS('{{ url_for('static', filename = 'timeTrial.js')}}'),btnSound.play()">
+    <img id="tryAgainBtn" class="btn" src="{{ url_for('static', filename = 'image/buttons/tryAgainBtn.png')}}" onclick="btnSound.play()" >
+    <img id="homeBtn" class="btn" src="{{ url_for ('static', filename ='image/buttons/homeBtn.png')}}" onclick= "location.href = '{{ url_for ('index')}}',btnSound.play()">
+    <audio src="{{url_for('static', filename = 'sound/sound.wav')}}" id="sound"></audio>
+    <audio src="{{url_for('static', filename = 'sound/bgMusic.mp3')}}" id="bgm" autoplay loop preload></audio>
+    <audio src="{{url_for('static', filename = 'sound/btnSound.wav')}}" id="btnSound"></audio>
+    <!--<audio src="sound/startSound.wav" id="startSound"></audio>-->
+    <!--<audio src="sound/bonus.wav" id="bonusSound"></audio>-->
+    <img name="mute?" id="unMute" src="{{url_for('static', filename = 'image/sound-on.png')}}" width="48" height="48" onclick="playSound()"/>
+    <img name="mute?" id="mute" src="{{url_for('static', filename = 'image/sound-off.png')}}" width="48" height="48" onclick="unplaySound()"/>
+    <img id="scoreBtn" class="btn" src="{{url_for('static',filename = 'image/buttons/scoreBtn.png')}}" onclick="btnSound.play()">
+
+
+  <script>
+
+  var ctx, balls = [], moves = [];
+  var mouseDownX = null, mouseDownY = null;
+  var timer;
+  var moveCount = 0;
+  var timeCount = 0;
+  var score = 0;
+  var imageList = [yellow, red, green, blue, purple, pink];
+  var tryAgainBtn = document.getElementById('tryAgainBtn');
+  var sound = document.getElementById('sound');
+  var bgm = document.getElementById('bgm');
+  var btnSound = document.getElementById('btnSound');
+  //var startSound = document.getElementById('startSound');
+  //var bonus = document.getElementById('bonusSound');
+
+  //initialize canvas.
+  var canvas = document.getElementById("canvas");
+  ctx = canvas.getContext("2d");
+
+  const unMute= document.getElementById("unMute");
+  const mute= document.getElementById("mute");
+  const btnSave= document.getElementById("btnSave");
+  const btnBack = document.getElementById('btnBack');
+  const inpValue = document.getElementById("inputName");
+  const homeBtn = document.getElementById("homeBtn");
+  const scoreBtn = document.getElementById("scoreBtn");
+
+
+  unMute.style.display = 'none';
+  mute.style.display = 'none';
+  btnBack.style.display = 'none';
+  btnSave.style.display = 'none';
+  inpValue.style.display = 'none';
+  homeBtn.style.display = 'none';
+  scoreBtn.style.display = 'none';
+
+
+  function setBgImage()
+  {
+    ctx.drawImage(bgImage, 0, 0);
+    
+
+  }
+
+  function setJS(fileName)
+  {
+      var elm = document.createElement('script');
+      elm.type = 'text/javascript';
+      elm.src = fileName;
+      document.body.appendChild(elm);
+
+      setTimeout(function(){
+        document.getElementById('basicBtn').style.display = 'none';
+        document.getElementById('timeBtn').style.display = 'none';
+        document.getElementById('inputName').style.display = 'none';
+        document.getElementById('tryAgainBtn').style.display = 'none';
+        document.getElementById('homeBtn').style.display = 'none';
+        //document.getElementById('inputName').style.display = 'none';
+
+        initialize();
+      },300);
+
+  }
+
+  function playSound(){
+    bgm.play();
+
+  }
+  function unplaySound(){
+    bgm.pause();
+
+  }
+
+
+ </script>
+
+ <script type="text/javascript" src="{{ url_for('static', filename = 'common.js')}}"></script>
+
+
+</body>
+
+</html>
